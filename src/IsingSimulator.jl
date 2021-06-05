@@ -1,9 +1,11 @@
 module IsingSimulator
+using DataFrames
 using Base: BufferStream
 using Random, Statistics,GLMakie, QuadGK
+using ProgressMeter
+import ForwardDiff: derivative
 
-
-export isingview!,mytest,βc2d,magn2d,entropy,ene,free_energy
+export isingview,mytest,βc2d,magn2d,entropy,ene,free_energy
 
 
 include("lattice.jl")
@@ -33,7 +35,11 @@ function free_and_mag(binf,bsup;nstep=1024)
     vals = LinRange(binf,bsup,nstep)
     m = [magn2d(β) for β in vals]
     f = [free_energy(β) for β in vals]
-    return m,f
+    e = [derivative(free_energy,b) for b in vals]
+    return DataFrame(:b=>collect(vals),
+                     :m=>m,
+                     :f=>f,
+                     :e=>e)
 end
 
 

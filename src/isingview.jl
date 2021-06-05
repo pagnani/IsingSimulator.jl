@@ -1,5 +1,5 @@
 
-function isingview!(I::NTuple{N,Int},β::T;
+function isingview(I::NTuple{N,Int},β::T;
     h::Vector{T}=T[],
     x0::Vector{Int}=rand([-1,1],prod(I)),
     nsweep::Int=100,
@@ -7,7 +7,7 @@ function isingview!(I::NTuple{N,Int},β::T;
     ) where N where T<:AbstractFloat
     
     meq = magn2d(β)
-   
+    progress = Progress(nsweep, 1)
     ising = Ising(I,h,β,x0)
     nspin = ising.N
     m = Node([mean(ising.spin)])
@@ -31,19 +31,21 @@ function isingview!(I::NTuple{N,Int},β::T;
         lines!(pos[2],1:nsweep, meq*ones(nsweep),color=:black,linewidth=3,label="+m")
         lines!(pos[2],1:nsweep,-meq*ones(nsweep),color=:black,linewidth=3,label="-m")
     else
-        lines!(pos[2],1:nsweep, meq*ones(nsweep),color=:black,linewidth=3)
+        lines!(pos[2],1:nsweep, meq*ones(nsweep),color=:black,linewidth=3,label="m")
     end
     axislegend(ax[2],fontsize=32)
     lines!(pos[2],m)
     lines!(pos[3],energia)
+    lines!(pos[3],1:nsweep, derivative(free_energy,β)*ones(nsweep),color=:black,linewidth=3,label="e")
     display(fig)
-    for t in 1:nsweep
+    for _ in 1:nsweep
         onemcsweep!(ising)
         a[] = reshape(ising.spin,I)
         m[] = push!(m[],mean(ising.spin))
         energia[] = push!(energia[],energy(ising)/nspin)
         sleep(1.0/fps)
-        println(mean(ising.spin)," ",energy(ising)/nspin)
+        #println(mean(ising.spin)," ",energy(ising)/nspin)
+        next!(progress)
     end
 end
 
