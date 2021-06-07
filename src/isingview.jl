@@ -36,7 +36,7 @@ function isingview(I::NTuple{N,Int},β::T;
     axislegend(ax[2],fontsize=32)
     lines!(pos[2],m)
     lines!(pos[3],energia)
-    lines!(pos[3],1:nsweep, derivative(free_energy,β)*ones(nsweep),color=:black,linewidth=3,label="e")
+    lines!(pos[3],1:nsweep, derivative(free_energy2d,β)*ones(nsweep),color=:black,linewidth=3,label="e")
     display(fig)
     for _ in 1:nsweep
         onemcsweep!(ising)
