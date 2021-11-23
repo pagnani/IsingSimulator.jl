@@ -18,7 +18,7 @@ function isingview(I::NTuple{N,Int},β::T;
     ax[1] = Axis(fig[1:2,1])
     ax[2] = Axis(fig[1,2],title="magnetization",ylabel="M/N",titlesize=32,xlabelsize=32,ylabelsize=32)
     ax[3] = Axis(fig[2,2],title="energy",xlabel="mc sweep",ylabel="E/N",titlesize=32,xlabelsize=32,ylabelsize=32)
-    pos = Vector{Makie.FigurePosition}(undef,3)
+    pos = Vector{Makie.GridPosition}(undef,3)
     pos[1] = fig[1:2,1]
     pos[2] = fig[1,2]
     pos[3] = fig[2,2]
