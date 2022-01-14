@@ -10,9 +10,9 @@ function isingview(I::NTuple{N,Int},β::T;
     progress = Progress(nsweep, 1)
     ising = Ising(I,h,β,x0)
     nspin = ising.N
-    m = Node([mean(ising.spin)])
-    energia = Node([energy(ising)/nspin])
-    a = Node(reshape(ising.spin,I))
+    m = Observable([mean(ising.spin)])
+    energia = Observable([energy(ising)/nspin])
+    a = Observable(reshape(ising.spin,I))
     fig = Figure(resolution=(2048,1024))
     ax = Vector{Axis}(undef,3)
     ax[1] = Axis(fig[1:2,1])
