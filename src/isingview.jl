@@ -3,8 +3,13 @@ function isingview(I::NTuple{N,Int},β::T;
     h::Vector{T}=T[],
     x0::Vector{Int}=rand([-1,1],prod(I)),
     nsweep::Int=100,
-    fps = 60
+    fps = 60,
+    fontsize=20               
+                   
     ) where N where T<:AbstractFloat
+
+    fontsize_theme = Theme(fontsize = fontsize)
+    set_theme!(fontsize_theme)
     
     meq = magn2d(β)
     progress = Progress(nsweep, 1)
@@ -33,7 +38,7 @@ function isingview(I::NTuple{N,Int},β::T;
     else
         lines!(pos[2],1:nsweep, meq*ones(nsweep),color=:black,linewidth=3,label="m")
     end
-    axislegend(ax[2],fontsize=32)
+    axislegend(ax[2])
     lines!(pos[2],m)
     lines!(pos[3],energia)
     lines!(pos[3],1:nsweep, derivative(free_energy2d,β)*ones(nsweep),color=:black,linewidth=3,label="e")
