@@ -18,7 +18,7 @@ function isingview(I::NTuple{N,Int},β::T;
     m = Observable([mean(ising.spin)])
     energia = Observable([energy(ising)/nspin])
     a = Observable(reshape(ising.spin,I))
-    fig = Figure(resolution=(2048,1024))
+    fig = Figure(size=(2048,1024))
     ax = Vector{Axis}(undef,3)
     ax[1] = Axis(fig[1:2,1])
     ax[2] = Axis(fig[1,2],title="magnetization",ylabel="M/N",titlesize=32,xlabelsize=32,ylabelsize=32)
