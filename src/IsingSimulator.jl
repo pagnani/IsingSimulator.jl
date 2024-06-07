@@ -1,3 +1,4 @@
+__precompile__(false) # precompilation stopped working in Julia 1.10
 module IsingSimulator
 using DataFrames
 import Base: BufferStream
